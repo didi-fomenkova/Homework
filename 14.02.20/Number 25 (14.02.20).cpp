@@ -108,10 +108,10 @@ void task13474() {
     k = 0;
     m = 0;
     for (i = 0; i < N; ++i)
-        if (((a[i] > 255) && (a[i] < 4096 )) && (a[i] > m) && ((a[i] % 16) == 0)) {
+        if ((a[i] > 255) && (a[i] > m) && ((a[i] % 16) == 0)) {
             m = a[i];
         }
-    cout << " Max is " << k << endl;
+    cout << " Max is " << m << endl;
 }
 
 // Дан массив, содержащий 2016 положительных целых чисел, не превышающих 1000.
@@ -128,10 +128,11 @@ void task11254() {
     k = 1;
     for (i = 0; i < N; ++i)
         k *= a[i];
-    for (i = 0; i < N; ++i)
+    for (i = 0; i < N; ++i) {
         if ((a[i] > m) && ((a[i] % 2) == (k % 2)) {
             m = a[i];
         }
+	}
     cout << "Max is " << m << endl; 
 }
 
@@ -168,12 +169,12 @@ void task6015() {
     int i, j, max;
     for (i = 0; i < N; i++)
         cin >> a[i];
-    max = 0;
+    max = -1;
     for (i = 0; i < N; ++i)
         if ((a[i] > max) && (a[i] < 1000) && (a[i] > 99) && ((a[i] % 9) != 0)) {
             max = a[i];
         }
-    if (max > 0) {
+    if (max > -1) {
         cout << "Max is " << max << endl;
     }
     else {
@@ -192,12 +193,12 @@ void task5821() {
     int i, j, max;
     for (i = 0; i < N; i++)
         cin >> a[i];
-    max = 0;
+    max = -1;
     for (i = 0; i < N; ++i)
         if ((a[i] > max) && (a[i] < 1000) && (a[i] > 99) && ((a[i] % 2) == 0)) {
             max = a[i];
         }
-    if (max > 0) {
+    if (max > -1) {
         cout << "Max is " << max << endl;
     }
     else {
@@ -222,27 +223,4 @@ void task3650() {
             max = a[i];
         }
     cout << "Max is " << max << endl;
-}
-
-// Дан целочисленный массив из 40 элементов. Элементы массива могут принимать произвольные значения.
-// Опишите на русском языке или на одном из языков программирования алгоритм, который находит и выводит
-// значение второго максимума (элемента, который в отсортированном по невозрастанию массиве стоял бы вторым).
-
-void task3614() {
-    int const N = 7;
-    int a[N];
-    int i, k, max, max2;
-    for (i = 0; i < N; i++)
-        cin >> a[i];
-    max = INT_ MIN;
-    max2 = INT_ MIN;
-    for (i = 0; i < N; i++) {
-        if (a[i] > max) {
-            max = a[i];
-        }
-        if ((a[i] > max2) && (a[i] < max)) {
-            max2 = a[i];
-        }
-    }
-    cout << "Second max is " << max2 << endl;
 }
