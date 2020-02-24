@@ -9,10 +9,11 @@ void N8001();
 void N2903();
 void N2904();
 void n2906();
+void task27_9702();
 
 int main() {
 
-	N2904();
+	task27_9702();
 
 	return 0;
 }
@@ -187,4 +188,47 @@ void n2906() {
 	}
 
 	cout << "Qty even is " << max;
+}
+
+// Последовательность натуральных чисел характеризуется числом Х — наибольшим числом, кратным 14 и являющимся произведением двух элементов последовательности 
+// с различными номерами.
+void task27_9702() {
+	int n14, max, n2, n7, pr, size, number;
+	cin >> size;
+
+	n14 = 0;
+	n2 = 0;
+	n7 = 0; 
+	max = 0;
+	pr = 1;
+
+	for (int i = 0; i < size; ++i) {
+		cin >> number;
+
+		if (number % 2 == 0 && number % 14 != 0 && number > n2) {
+			n2 = number;
+		}
+		else if (number % 7 == 0 && number % 14 != 0 && number > n7) {
+			n7 = number;
+		}
+		else if (number % 14 == 0 && number > n14) {
+			n14 = number;
+		}
+		else if (number > max) {
+			max = number;
+		}
+	}
+	pr = n2 * n7;
+	if (n14 * max > pr) {
+		pr = n14 * max;
+	}
+	if (n14 * n7 > pr) {
+		pr = n14 * n7;
+	}
+	if (n2 * n14 > pr) {
+		pr = n2 * n14;
+	}
+	cout << pr << endl;
+
+
 }
