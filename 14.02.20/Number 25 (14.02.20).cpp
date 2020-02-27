@@ -13,6 +13,7 @@ void task7386();
 void task6015();
 void task5821();
 void task3650();
+void task3614();
 
 int main() {
 
