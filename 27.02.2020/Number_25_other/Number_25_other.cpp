@@ -9,7 +9,6 @@ void task_18573();
 void task_16901();
 
 int main() {
-
 	task_16901();
 
 	return 0;
@@ -73,17 +72,19 @@ void task_3641() {
 		if (a[i] < 0 ) {
 			x++;
 		}
-		else if (x > 0) {
-			max = x;
+		else {
+			if (x > max) {
+				max = x;
+			}
+
 			x = 0;
 		}
 	}
-	if (max > 0) {
-		cout << max  << endl;
-	}
-	else {
-		cout << max;
-	}
+
+	if (x > max)
+		max = x;
+
+	cout << max;
 }
 
 // Дан массив, содержащий 2019 положительных целых чисел, не превышающих 15 000.
@@ -92,14 +93,14 @@ void task_3641() {
 // вычислить их среднее арифметическое, уменьшить все чётные элементы, превышающие это среднее,
 // на величину этого среднего и вывести изменённый массив.
 
-void task_18573() {
+void task_18573() { // НЕПРАВИЛЬНО
 	int const N = 5;
 	int a[N];
 	int i, m, k;
 	for (i = 0; i < N; ++i)
 		cin >> a[i];
-	k = INT_MIN; // max
-	m = INT_MAX; //min
+	k = -1; // max
+	m = 15001; //min
 	for (i = 0; i < N; ++i) {
 		if (a[i] % 2 != 0 && a[i] < m) {
 			m = a[i];
@@ -108,7 +109,14 @@ void task_18573() {
 			k = a[i];
 		}
 	}
-	m = (m + k) / 2;
+	if (k == -1) {
+		k = 0;
+		m = 0;
+	}
+	else {
+		m = (m + k) / 2;
+	}
+
 	for (i = 0; i < N; ++i) {
 		if (a[i] % 2 == 0 && a[i] > m) {
 			a[i] -= m;
@@ -128,13 +136,13 @@ void task_16901() {
 	int i, k, m;
 	for (i = 0; i < N; ++i)
 		cin >> a[i];
-	k = INT_MAX;
+	k = 15001;
 	for (i = 0; i < N; ++i) {
 		if (a[i] % 5 == 0 && a[i] < k) {
 			k = a[i];
 		}
 	}
-	if (k % 5 == 0) {
+	if (k == 15001) {
 		for (i = 0; i < N; ++i) {
 			if (a[i] % 2 != 0) {
 				a[i] -= k;
