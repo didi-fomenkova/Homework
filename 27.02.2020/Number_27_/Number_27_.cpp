@@ -5,10 +5,11 @@ using namespace std;
 void task_27_5503();
 void task_27_6202();
 void task_27_6971();
+void task_9708();
 
 int main() {
 
-	task_27_6971();
+	task_9708();
 
 	return 0;
 }
@@ -145,5 +146,70 @@ void task_27_6971() {
 	}
 	else {
 		cout << "Values ​​ didn't match" << endl;
+	}
+}
+#include<iostream>
+
+using namespace std;
+
+void task_9708();
+
+
+int main() {
+
+	task_9708();
+
+	return 0;
+
+}
+
+// Number 27:
+/*
+Последовательность натуральных чисел характеризуется числом Х — наибольшим числом,
+кратным 14 и являющимся произведением двух элементов последовательности с различными номерами.
+На вход программе в первой строке подаётся количество чисел N. В каждой из последующих N строк
+записано одно натуральное число, не превышающее 1000.
+*/
+
+void task_9708() {
+	int number, n14, n7, n2, max, size, pr;
+	cin >> size;
+	n14 = 0;
+	n7 = 0;
+	n2 = 0;
+	max = 0;
+	pr = 1;
+	for (int i = 0; i < size, ++i) {
+		cin >> number;
+		if (number % 7 == 0 && number % 14 != 0 && number > n7) {
+			n7 = number;
+		}
+		else if (number % 2 == 0 && number % 14 != 0 && number > n2) {
+			n2 = number;
+		}
+		else if (number % 14 == 0 && number > n14) {
+			n14 = number;
+		}
+		else if (number > max) {
+			max = number;
+		}
+	}
+	if (n2 * n7 > pr) {
+		pr = n2 * n7;
+	}
+	if (n2 * n14 > pr) {
+		pr = n2 * n14;
+	}
+	if (n7 * n14 > pr) {
+		pr = n7 * n14;
+	}
+	if (n14 * max > pr) {
+		pr = n14 * max;
+	}
+	if (pr = 1) {
+		cout << "Число X не найдено" << endl;
+	}
+	else {
+		cout << pr << endl;
 	}
 }
