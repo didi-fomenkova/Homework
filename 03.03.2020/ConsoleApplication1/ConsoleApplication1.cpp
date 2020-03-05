@@ -9,12 +9,17 @@ void task27_15643();
 void task27_15867();
 void task27_18096();
 void task27_18455();
+void task27_15812();
+void task27_15839();
+void task27_15937();
+void task27_15964();
+
 
 
 int main() {
 	setlocale(LC_ALL, "Russian");
 	
-	task27_18455();
+	task27_15964();
 
 	return 0;
 
@@ -308,4 +313,172 @@ void task27_18455() {
 	}
 	kol = n10 * (n10 - 1) / 2 + n10 * (size - n10) / 2 + n5 * n2;
 	cout << kol << endl;
+}
+
+/*
+Дан набор из N целых положительных чисел. Из этих чисел формируются
+все возможные пары (парой считаются два элемента, которые находятся
+на разных местах в наборе, порядок чисел в паре не учитывается),
+в каждой паре вычисляются сумма и произведение элементов.
+Необходимо определить количество пар, у которых сумма нечётна,
+а произведение делится на 3.
+Напишите эффективную по времени и по памяти программу для решения этой задачи.
+Описание входных и выходных данных.
+В первой строке входных данных задаётся количество чисел N (1 ≤ N ≤ 1000).
+В каждой из последующих N строк записано одно натуральное число,
+не превышающее 100.
+*/
+
+void task27_15812() {
+	int n3_even, n3_odd, not_n3_even, not_n3_odd, size, number, pairs;
+	cin >> size;
+	n3_even = 0;
+	n3_odd = 0;
+	not_n3_even = 0;
+	not_n3_odd = 0;
+	pairs = 0;
+	for (int i = 0; i < size; i++) {
+		cin >> number;
+		if (number % 2 == 0 && number % 3 == 0) {
+			n3_even++;
+		}
+		else if (number % 2 != 0 && number % 3 == 0) {
+			n3_odd++;
+		}
+		else if (number % 2 == 0 && number % 3 != 0) {
+			not_n3_even++;
+		}
+		else if (number % 2 != 0 && number % 3 != 0) {
+			not_n3_odd++;
+		}
+	}
+	pairs = n3_even * not_n3_odd + n3_odd * not_n3_even + n3_even * n3_odd;
+	cout << pairs << endl;
+}
+
+/*
+Дан набор из N целых положительных чисел.
+Из этих чисел формируются все возможные пары (парой считаются
+два элемента, которые находятся на разных местах в наборе,
+порядок чисел в паре не учитывается), в каждой паре вычисляются
+сумма и произведение элементов. Необходимо определить количество пар,
+у которых сумма нечётна, а произведение делится на 5.
+*/
+
+void task27_15839() {
+	int n5_even, n5_odd, not_n5_even, not_n5_odd, size, number, pairs;
+	cin >> size;
+	n5_even = 0;
+	n5_odd = 0;
+	not_n5_even = 0;
+	not_n5_odd = 0;
+	pairs = 0;
+	for (int i = 0; i < size; i++) {
+		cin >> number;
+		if (number % 2 == 0 && number % 5 == 0) {
+			n5_even++;
+		}
+		else if (number % 2 != 0 && number % 5 == 0) {
+			n5_odd++;
+		}
+		else if (number % 2 == 0 && number % 5 != 0) {
+			not_n5_even++;
+		}
+		else if (number % 2 != 0 && number % 5 != 0) {
+			not_n5_odd++;
+		}
+	}
+	pairs = n5_even * not_n5_odd + n5_odd * not_n5_even + n5_even * n5_odd;
+	cout << pairs << endl;
+}
+
+/*
+Дан набор из N целых положительных чисел. Из них нужно выбрать и
+вывести два числа так, чтобы их сумма была нечётна,
+а произведение делилось на 3 и при этом было максимально возможным.
+Выбранные числа можно выводить в любом порядке. 
+Если есть несколько подходящих пар, можно выбрать любую из них.
+Если подходящих пар нет, нужно вывести 0.
+*/
+
+void task27_15937() {
+	int n3_even, n3_odd, size, number, pr;
+	int max_even, max_odd;
+	cin >> size;
+	max_even = 0;
+	max_odd = 0;
+	n3_even = 0;
+	n3_odd = 0;
+	pr = 0;
+	for (int i = 0; i < size; i++) {
+		cin >> number;
+		if (number % 3 == 0 && number % 2 == 0 && number > n3_even)
+			n3_even = number;
+		else if (number % 3 == 0 && number % 2 != 0 && number > n3_odd)
+			n3_odd = number;
+		else if (number % 3 != 0 && number % 2 == 0 && number > max_even) {
+			max_even = number;
+		}
+		else if (number % 3 != 0 && number % 2 != 0 && number > max_odd) {
+			max_odd = number;
+		}
+	}
+		if (n3_even * n3_odd > pr)
+			pr = n3_even * n3_odd;
+		if (n3_odd * max_even > pr)
+			pr = n3_odd * max_even;
+		if (n3_even * max_odd > pr)
+			pr = n3_even * max_odd;
+		if (pr == n3_even * n3_odd && n3_even > 0 && n3_odd > 0)
+			cout << n3_even << " и " << n3_odd << endl;
+		else if (pr == n3_odd * max_even && n3_odd > 0 && max_even > 0)
+			cout << n3_odd << " и " << max_even << endl;
+		else if (pr == n3_even * max_odd && n3_even > 0 && max_odd > 0)
+			cout << n3_even << " и " << max_odd << endl;
+		else if (pr == 0)
+			cout << pr << endl;
+}
+
+/*
+Дан набор из N целых положительных чисел. Из них нужно выбрать и вывести два числа так,
+чтобы их сумма была нечётна, а произведение делилось на 5 и при этом было максимально возможным.
+Выбранные числа можно выводить в любом порядке. Если есть несколько подходящих пар, можно выбрать любую из них.
+Если подходящих пар нет, нужно вывести 0.
+*/
+void task27_15964() {
+	int n5_even, n5_odd, size, number, pr;
+	int max_even, max_odd;
+	cin >> size;
+	max_even = 0;
+	max_odd = 0;
+	n5_even = 0;
+	n5_odd = 0;
+	pr = 0;
+	for (int i = 0; i < size; i++) {
+		cin >> number;
+		if (number % 5 == 0 && number % 2 == 0 && number > n5_even)
+			n5_even = number;
+		else if (number % 5 == 0 && number % 2 != 0 && number > n5_odd)
+			n5_odd = number;
+		else if (number % 5 != 0 && number % 2 == 0 && number > max_even) {
+			max_even = number;
+		}
+		else if (number % 5 != 0 && number % 2 != 0 && number > max_odd) {
+			max_odd = number;
+		}
+	}
+	if (n5_even * n5_odd > pr)
+		pr = n5_even * n5_odd;
+	if (n5_odd * max_even > pr)
+		pr = n5_odd * max_even;
+	if (n5_even * max_odd > pr)
+		pr = n5_even * max_odd;
+	if (pr == n5_even * n5_odd && n5_even > 0 && n5_odd > 0)
+		cout << n5_even << " и " << n5_odd << endl;
+	else if (pr == n5_odd * max_even && n5_odd > 0 && max_even > 0)
+		cout << n5_odd << " и " << max_even << endl;
+	else if (pr == n5_even * max_odd && n5_even > 0 && max_odd > 0)
+		cout << n5_even << " и " << max_odd << endl;
+	else if (pr == 0)
+		cout << pr << endl;
 }
