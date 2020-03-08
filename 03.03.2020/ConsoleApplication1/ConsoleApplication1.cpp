@@ -52,9 +52,10 @@ void task27_9708() {
 		else if (number % 14 == 0 && number > n14) {
 			n14 = number;
 		}
-		else if (number > max && number % 14 != 0) {
+		else if (number > max) {
 			max = number;
 		}
+
 	}
 	if (n2 * n7 > pr) {
 		pr = n2 * n7;
@@ -105,7 +106,7 @@ void task27_13373() {
 		else if (number % 26 == 0 && number > n26) {
 			n26 = number;
 		}
-		else if (number > max&& number % 26 != 0) {
+		else if (number > max) {
 			max = number;
 		}
 	}
@@ -181,8 +182,9 @@ void task27_13754() {
 */
 
 void task27_15643() {
-	int n17, n2, notn, number, size, kol;
+	int n17, n2, notn, number, size, kol, n34;
 	cin >> size;
+	n34 = 0;
 	n17 = 0;
 	n2 = 0;
 	notn = 0;
@@ -195,12 +197,14 @@ void task27_15643() {
 		else if (number % 2 == 0 && number % 34 != 0) {
 			n2++;
 		}
-		
+		else if (number % 34 == 0) {
+			n34++;
+		}		
 		else if (number % 34 != 0 && number % 17 != 0 && number % 2 != 0) {
 			notn++;
 		}
 	}
-	kol = n17 * (size - n17) / 2 + n2 * (size - n2) / 2 + notn * (size - notn) / 2;
+	kol = n17 * (size - n17) / 2 + n2 * (size - n2) / 2 + notn * (size - notn - n34) / 2;
 	cout << kol << endl;
 }
 
@@ -217,6 +221,8 @@ void task27_15643() {
 количество пар, в которых произведение элементов не кратно 14.
 */
 
+
+// ПОПРАВИТЬ!!!
 void task27_15867() {
 	int number, n7, n2, notn, size, kol;
 	n7 = 0;
