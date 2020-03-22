@@ -5,10 +5,12 @@ using namespace std;
 void task_27_14788();
 void task_27_15122();
 void task_27_15149();
+void task18806();
+void task2();
 
 int main() {
 
-	task_27_15149();
+	task2();
 
 	return 0;
 }
@@ -152,10 +154,62 @@ void task_27_15149() {
 }
 
 /* 
-№ 18806 (???????)
+№ 18806
 На вход программы поступает последовательность из N целых положительных чисел.
 Рассматриваются все пары различных элементов последовательности (элементы пары не обязаны
 стоять в последовательности рядом), такие что ai > aj при i < j ≤ N. Среди пар, удовлетворяющих этому условию,
 необходимо найти и вывести пару с максимальной суммой элементов, которая делится на 120.
 Если среди найденных пар максимальную сумму имеют несколько, то можно напечатать любую из них.
 */
+
+void task18806() {
+	int number, size;
+	int maxSum = -1;
+	int el1 = -1;
+	int el2 = -1;
+	cin >> size;
+	int a[120] = {};
+	for (int i = 0; i < size; i++) {
+		cin >> number;
+
+		if (number % 120 == 0 && a[0] != 0 && number < a[0] && number + a[0] > maxSum) {
+			maxSum = number + a[0];
+			el1 = number;
+			el2 = a[0];
+		}
+		else if (a[120 - number % 120] != 0 && number < a[120 - number % 120] && number + a[120 - number % 120] > maxSum) {
+			maxSum = number + a[120 - number % 120];
+			el1 = number;
+			el2 = a[120 - number % 120];
+		}
+
+		if (number > a[number % 120]) {
+			a[number % 120] = number;
+		}
+	}
+	cout << el1 << " " << el2 << endl;
+}
+
+void task2() {
+	int x, y, size;
+	int yMax = INT_MIN;
+	int yMin = INT_MAX;
+	int xMax = INT_MIN;
+	float S = 0;
+	cin >> size;
+	for (int i = 0; i < size; i++) {
+		cin >> x >> y;
+		if (x == 0 && y > yMax)
+			yMax = y;
+		if (x == 0 && y < yMin)
+			yMin = y;
+
+		if (y != 0 && abs(x) > xMax)
+			xMax = abs(x);
+	}
+	S = float((yMax - yMin) * xMax) / float(2);
+	if (S > 0)
+		cout << S << endl;
+	else
+		cout << "NO" << endl;
+}
