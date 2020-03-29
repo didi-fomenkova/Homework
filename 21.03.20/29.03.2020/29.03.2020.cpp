@@ -16,8 +16,7 @@ void task_10428();
 int main() {
 
 	setlocale(LC_ALL, "Russian");
-
-	task_10428();
+	task_5258();
 
 	return 0;
 }
@@ -115,14 +114,14 @@ void task_9777() {
 		if (y == 0 && abs(x) > xMax)
 			xMax = abs(x);
 	}
-	S = float (xMax * yMax) / float(2);
+	S = float(xMax * yMax) / float(2);
 	if (S == 0)
 		cout << "Треугольник не существует " << endl;
 	else
 		cout << S << endl;
 }
 
-/*№ 4868 ???
+/*№ 4868
 На плоскости дан набор точек с целочисленными координатами.
 Необходимо найти такой треугольник наибольшей площади с вершинами в этих точках,
 у которого нет общих точек с осью Оу, а одна из сторон лежит на оси Ох.
@@ -134,33 +133,37 @@ void task_4868() {
 	int xMinPos = INT_MAX;
 	int xMaxNeg = INT_MIN;
 	int xMinNeg = INT_MAX;
-	int yMax = 0;
-	int yKod = 0;
-	float S = 0;
+	int yMaxPos = 0;
+	int yMaxNeg = 0;
+	float Spos = 0;
+	float Sneg = 0;
 	cin >> size;
 	for (int i = 0; i < size; i++) {
 		cin >> x >> y;
 		if (y == 0 && x < xMinPos && x > 0)
 			xMinPos = x;
-		else if (y == 0 && x < xMinPos && x < 0)
+		else if (y == 0 && x < xMinNeg && x < 0)
 			xMinNeg = x;
-		if (y == 0 && x > xMaxPos&& x > 0)
+		if (y == 0 && x > xMaxPos && x > 0)
 			xMaxPos = x;
-		else if (y == 0 && x > xMaxPos&& x < 0)
+		else if (y == 0 && x > xMaxNeg && x < 0)
 			xMaxNeg = x;
-		if (x != 0 && abs(y) > yMax){
-			yMax = abs(y);
-			yKod = x;
+		if (x > 0 && abs(y) < yMaxPos) {
+			yMaxPos = abs(y);
+		}
+		if (x < 0 && abs(y) < yMaxNeg) {
+			yMaxNeg = abs(y);
 		}
 	}
-	if (yKod > 0)
-		S = float((xMaxPos - xMinPos) * yMax) / 2;
-	else
-		S = float((xMaxNeg - xMinNeg) * yMax) / 2;
-	if (S == 0)
+	
+		Spos = float((xMaxPos - xMinPos) * yMaxPos) / 2;
+		Sneg = float((xMaxNeg - xMinNeg) * yMaxNeg) / 2;
+	if (Spos == 0 && Sneg == 0)
 		cout << " NO " << endl;
-	else
-		cout << S << endl;
+	else if (Spos > Sneg)
+		cout << Spos << endl;
+	else 
+		cout << Sneg << endl;
 }
 
 /* № 5258
@@ -184,59 +187,68 @@ void task_5258() {
 	int M2 = 0;
 	int M3 = 0;
 	int M4 = 0;
-	int fixX1 = INT_MAX;
-	int fixY1= INT_MAX;
-	int fixX2 = INT_MAX;
-	int fixY2 = INT_MAX;
-	int fixX3 = INT_MAX;
-	int fixY3 = INT_MAX;
-	int fixX4 = INT_MAX;
-	int fixY4 = INT_MAX;
+	int fix1 = INT_MAX;
+	int y1 = 0;
+	int y2 = 0;
+	int y3 = 0;
+	int y4 = 0;
+	int x1 = 0;
+	int x2 = 0;
+	int x3 = 0;
+	int x4 = 0;
+	int fix2 = INT_MAX;
+	int fix3 = INT_MAX;
+	int fix4 = INT_MAX;
 	int R1 = INT_MAX;
 	int R2 = INT_MAX;
 	int R3 = INT_MAX;
 	int R4 = INT_MAX;
+	int max = 0;
 	cin >> size;
 	for (int i = 0; i < size; i++) {
 		cin >> x >> y;
 		if (x > 0 && y > 0) {
 			M1++;
-			if (x < fixX1 && y < fixY1) {
-				fixX1 = x;
-				fixY1 = y;
+			if (abs(x) + abs(y) < fix1) {
+				fix1 = abs(x) + abs(y);
+				x1 = x;
+				y1 = y;
 			}
 			if (abs(x) < R1)
-				R1 = abs(y);
+				R1 = abs(x);
 			if (abs(y) < R1)
 				R1 = abs(y);
 		}
 		if (x < 0 && y > 0) {
 			M2++;
-			if (x < fixX2 && y < fixY2) {
-				fixX2 = x;
-				fixY2 = y;
+			if (abs(x) + abs(y) < fix2) {
+				fix2 = abs(x) + abs(y);
+				x2 = x;
+				y2 = y;
 			}
 			if (abs(x) < R2)
-				R2 = abs(y);
+				R2 = abs(x);
 			if (abs(y) < R2)
 				R2 = abs(y);
 		}
 		if (x < 0 && y < 0) {
 			M3++;
-			if (x < fixX3 && y < fixY3) {
-				fixX3 = x;
-				fixY3 = y;
+			if (abs(x) + abs(y) < fix3) {
+				fix3 = abs(x) + abs(y);
+				x3 = x;
+				y3 = y;
 			}
 			if (abs(x) < R3)
-				R3 = abs(y);
+				R3 = abs(x);
 			if (abs(y) < R3)
 				R3 = abs(y);
 		}
 		if (x > 0 && y < 0) {
 			M4++;
-			if (x < fixX4 && y < fixY4) {
-				fixX4 = x;
-				fixY4 = y;
+			if (abs(x) + abs(y) < fix4) {
+				fix4 = abs(x) + abs(y);
+				x4 = x;
+				y4 = y;
 			}
 			if (abs(x) < R4)
 				R4 = abs(y);
@@ -244,129 +256,103 @@ void task_5258() {
 				R4 = abs(y);
 		}
 	}
-	if (M1 > M2 && M1 > M3 && M1 > M4) {
+	if (M1 > M2&& M1 > M3&& M1 > M4) {
 		K = 1;
 		cout << "K = " << K << endl;
 		cout << "M = " << M1 << endl;
-		cout << "A = (" << fixX1 << "," << fixY1 << ")" << endl;
+		cout << "A = (" << x1 << "," << y1 << ")" << endl;
 		cout << "R =  " << R1 << endl;
 	}
-	 else if (M2 > M1 && M2 > M3 && M2 > M4) {
+	else if (M2 > M1&& M2 > M3&& M2 > M4) {
 		K = 2;
 		cout << "K = " << K << endl;
 		cout << "M = " << M2 << endl;
-		cout << "A = (" << fixX2 << "," << fixY2 << ")" << endl;
+		cout << "A = (" << x2 << "," << y2 << ")" << endl;
 		cout << "R =  " << R2 << endl;
 	}
-	 else if (M3 > M2 && M3 > M1 && M3 > M4) {
+	else if (M3 > M2&& M3 > M1&& M3 > M4) {
 		K = 3;
 		cout << "K = " << K << endl;
 		cout << "M = " << M3 << endl;
-		cout << "A = (" << fixX3 << "," << fixY3 << ")" << endl;
+		cout << "A = (" << x3 << "," << y3 << ")" << endl;
 		cout << "R =  " << R3 << endl;
 	}
-	else if (M4 > M2 && M4 > M3 && M4 > M1) {
+	else if (M4 > M2&& M4 > M3&& M4 > M1) {
 		K = 4;
 		cout << "K = " << K << endl;
 		cout << "M = " << M4 << endl;
-		cout << "A = (" << fixX4 << "," << fixY4 << ")" << endl;
+		cout << "A = (" << x4 << "," << y4 << ")" << endl;
 		cout << "R =  " << R4 << endl;
 	}
-	else if (M1 == M2) {
-		if (R1 < R2 || R1 == R2) {
+	else {
+		if (M1 > M2)
+			max = M1;
+		else
+			max = M2;
+
+		if (M3 > max)
+			max = M3;
+		if (M4 > max)
+			max = M4;
+		bool a[4] = { false };
+
+		if (M1 == max)
+			a[0] = true;
+		if (M2 == max)
+			a[1] = true;
+		if (M3 == max)
+			a[2] = true;
+		if (M4 == max)
+			a[3] = true;
+
+		int Rmin = INT_MAX;
+		if (a[0] && R1 < Rmin)
+			Rmin = R1;
+		if (a[1] && R2 < Rmin)
+			Rmin = R2;
+		if (a[2] && R3 < Rmin)
+			Rmin = R3;
+		if (a[3] && R4 < Rmin)
+			Rmin = R4;
+
+		if (!(a[0] && R1 == Rmin))
+			a[0] = false;
+		if (!(a[1] && R2 == Rmin))
+			a[1] = false;
+		if (!(a[2] && R3 == Rmin))
+			a[2] = false;
+		if (!(a[3] && R4 == Rmin))
+			a[3] = false;
+
+		if (a[0]) {
 			K = 1;
 			cout << "K = " << K << endl;
 			cout << "M = " << M1 << endl;
-			cout << "A = (" << fixX1 << "," << fixY1 << ")" << endl;
+			cout << "A = (" << x1 << "," << y1 << ")" << endl;
 			cout << "R =  " << R1 << endl;
 		}
-		else if (R2 < R1) {
+		else if (a[1]) {
 			K = 2;
 			cout << "K = " << K << endl;
 			cout << "M = " << M2 << endl;
-			cout << "A = (" << fixX2 << "," << fixY2 << ")" << endl;
+			cout << "A = (" << x2 << "," << y2 << ")" << endl;
 			cout << "R =  " << R2 << endl;
 		}
-	}
-	else if (M1 == M3) {
-		if (R1 < R3 || R1 == R3) {
-			K = 1;
-			cout << "K = " << K << endl;
-			cout << "M = " << M1 << endl;
-			cout << "A = (" << fixX1 << "," << fixY1 << ")" << endl;
-			cout << "R =  " << R1 << endl;
-		}
-		else if (R3 < R1) {
+		else if (a[2]) {
 			K = 3;
 			cout << "K = " << K << endl;
 			cout << "M = " << M3 << endl;
-			cout << "A = (" << fixX3 << "," << fixY3 << ")" << endl;
+			cout << "A = (" << x3 << "," << y3 << ")" << endl;
 			cout << "R =  " << R3 << endl;
+
 		}
-	}
-	else if (M1 == M4) {
-		if (R1 < R4 || R1 == R4) {
-			K = 1;
-			cout << "K = " << K << endl;
-			cout << "M = " << M1 << endl;
-			cout << "A = (" << fixX1 << "," << fixY1 << ")" << endl;
-			cout << "R =  " << R1 << endl;
-		}
-		else if (R4 < R1) {
+		else if (a[3]) {
 			K = 4;
 			cout << "K = " << K << endl;
 			cout << "M = " << M4 << endl;
-			cout << "A = (" << fixX4 << "," << fixY4 << ")" << endl;
+			cout << "A = (" << x4 << "," << y4 << ")" << endl;
 			cout << "R =  " << R4 << endl;
 		}
-	}
-	else if (M2 == M3) {
-		if (R2 < R3 || R3 == R2) {
-			K = 2;
-			cout << "K = " << K << endl;
-			cout << "M = " << M2 << endl;
-			cout << "A = (" << fixX2 << "," << fixY2 << ")" << endl;
-			cout << "R =  " << R2 << endl;
-		}
-		else if (R3 < R2) {
-			K = 3;
-			cout << "K = " << K << endl;
-			cout << "M = " << M3 << endl;
-			cout << "A = (" << fixX3 << "," << fixY3 << ")" << endl;
-			cout << "R =  " << R3 << endl;
-		}
-	}
-	else if (M2 == M4) {
-		if (R2 < R4 || R4 == R2) {
-			K = 2;
-			cout << "K = " << K << endl;
-			cout << "M = " << M2 << endl;
-			cout << "A = (" << fixX2 << "," << fixY2 << ")" << endl;
-			cout << "R =  " << R2 << endl;
-		}
-		else if (R4 < R2) {
-			K = 4;
-			cout << "K = " << K << endl;
-			cout << "M = " << M4 << endl;
-			cout << "A = (" << fixX4 << "," << fixY4 << ")" << endl;
-			cout << "R =  " << R4 << endl;
-		}
-	}
-	else if (M3 == M4) {
-	if (R3 < R4 || R3 == R4) {
-		K = 3;
-		cout << "K = " << K << endl;
-		cout << "M = " << M3 << endl;
-		cout << "A = (" << fixX3 << "," << fixY3 << ")" << endl;
-		cout << "R =  " << R3 << endl;
-	}
-	else if (R4 < R3) {
-		K = 4;
-		cout << "K = " << K << endl;
-		cout << "M = " << M4 << endl;
-		cout << "A = (" << fixX4 << "," << fixY4 << ")" << endl;
-		cout << "R =  " << R4 << endl;
-	}
 	}
 }
 
@@ -455,7 +441,7 @@ void task_10303() {
 		if (y == -x && abs(x) > maxB)
 			maxB = abs(x);
 	}
-	S = maxA * maxB;
+	S = float(maxA * maxB) / 2;
 	if (S == 0)
 		cout << "Треугольник не существует" << endl;
 	else
@@ -482,7 +468,7 @@ void task_10330() {
 		if (y == -x && ((abs(x) < minB) || (minB == 0)))
 			minB = abs(x);
 	}
-	S = minA * minB;
+	S = float(minA * minB) / 2;
 	if (S == 0)
 		cout << "Треугольник не существует" << endl;
 	else
