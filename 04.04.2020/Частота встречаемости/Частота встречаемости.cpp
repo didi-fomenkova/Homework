@@ -10,10 +10,12 @@ void task_13638();
 void task_13611();
 void task_14242();
 void task_14286();
+void task_7772();
+void task_7773();
 
 int main() {
 
-	task_14286();
+	task_7773();
 
 	return 0;
 }
@@ -32,25 +34,28 @@ void task_6436() {
 	int par[16];
 	cin >> size;
 	for (int i = 0; i < 16; i++)
-		par[i] = i; //???
+		par[i] = i + 1;
 	for (int j = 0; j < size; j++) {
 		cin >> number;
-		bal[number]++;
+		bal[number - 1]++;
 	}
-	for (int i = 16; i > 0; i--) {
-		for (int j = 1; j < 16; j++) {
-			if (bal[j - 1] < bal[j]) {
-				number = bal[j - 1];
-				bal[j] = bal[j - 1];
-				bal[j - 1] = number;
-				number = par[j - 1];
-				par[j] = par[j - 1];
-				par[j - 1] = number;
+	
+	for (int i = 0; i < 16; i++) {
+		for (int j = i; j < 16; j++) {
+			if (bal[j] < bal[j + 1]) {
+				int temp1 = bal[j];
+				bal[j] = bal[j + 1];
+				bal[j + 1] = temp1;
+
+				int temp2 = par[j];
+				par[j] = par[j + 1];
+				par[j + 1] = temp2;
 			}
 		}
 	}
+
 	for (int i = 0; i < 16; i++) {
-		if (par[i] > 0)
+		if (bal[i] > 0)
 			cout << par[i] << " " << bal[i] << endl;
 	}
 }
@@ -104,6 +109,7 @@ void task_13423() {
 			number = number / 10;
 		}
 		a[sum]++;
+		sum = 0;
 	}
 	for (int i = 0; i < 28; i++) {
 		if (a[i] > a[maxSum])
@@ -284,4 +290,85 @@ void task_14286() {
 		}
 	}
 	cout << maxSum << endl;
+}
+
+void task_7772() {
+	int size;
+	int maxPr = 0;
+	int el1 = 0;
+	int el9 = 0;
+	int maxK = 0;
+	int a[7] = { 0 };
+	cin >> size;
+
+	cin >> el1;
+	for (int i = 0; i < 7; i++) {
+		cin >> a[i];
+	}
+	cin >> el9;
+
+	maxK = el1;
+	maxPr = maxK * el9;
+
+	for (int i = 10; i < size + 1; i++) {
+		el1 = a[0];
+		for (int j = 0; j < 6; j++) {
+			a[j] = a[j + 1];
+		}
+		a[6] = el9;
+		cin >> el9;
+		if (el1 > maxK)
+			maxK = el1;
+		if (maxK * el9 > maxPr)
+			maxPr = maxK * el9;
+	}
+	
+	cout << maxPr << endl;
+	// 10	100		45		55		245		35		25		10		10		10		26
+
+}
+
+
+void task_7773() {
+	int size;
+	int minPr = -1;
+	int el1 = 0;
+	int el7 = 0;
+	int minK = 0;
+	int minChK = -1;
+	int a[5] = { 0 };
+	cin >> size;
+
+	cin >> el1;
+	for (int i = 0; i < 5; i++) {
+		cin >> a[i];
+	}
+	cin >> el7;
+	minK = el1;
+	if (el1 % 2 == 0) {
+		minChK = el1;	
+	}
+
+	if (el1 % 2 == 0 || el7 % 2 == 0) {
+		minPr = el1 * el7;
+	}
+
+	for (int i = 8; i < size + 1; i++) {
+		el1 = a[0];
+		for (int j = 0; j < 4; j++) {
+			a[j] = a[j + 1];
+		}
+		a[4] = el7;
+		cin >> el7;
+		if (el1 < minK)
+			minK = el1;
+		if (el1 % 2 == 0 && el1 < minChK)
+			minChK = el1;
+		if (el7 % 2 == 0 && minK * el7 < minPr)
+			minPr = minK * el7;
+		if (minChK * el7 < minPr && minChK > -1)
+			minPr = minChK * el7;
+	}
+	
+	cout << minPr << endl;
 }
