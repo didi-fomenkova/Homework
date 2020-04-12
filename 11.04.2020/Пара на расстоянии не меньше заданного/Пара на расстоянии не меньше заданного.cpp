@@ -22,7 +22,7 @@ int main() {
 
 	setlocale(LC_ALL, "Russia");
 
-	task_18603();
+	task_16830();
 
 	return 0;
 }
@@ -134,7 +134,7 @@ void task_9179() {
 	cout << srAr << endl;
 }
 
-/*№ 7472 ?? не работает с дробными числами ??
+/*№ 7472
 На спутнике «Фотон» установлен прибор, предназначенный для измерения энергии космических лучей.
 Каждую минуту прибор передаёт по каналу связи неотрицательное вещественное число — количество энергии,
 полученной за последнюю минуту, измеренное в условных единицах. Временем, в течение которого происходит передача, можно пренебречь.
@@ -146,7 +146,7 @@ void task_9179() {
 
 void task_7472() {
 	double size;
-	float el1 = 0;
+	double el1 = 0;
 	double el7 = 0;
 	double minPr = INT_MAX;
 	double a[5] = { 0 };
@@ -216,9 +216,14 @@ void task_10490() {
 	int el1 = 0;
 	int el16 = 0;
 	int minPr = 1000001;
+	int minChet = 1;
+	int minEl = 1001;
 	int a[14] = { 0 };
 	cin >> size;
 	cin >> el1;
+	if (el1 % 2 == 0)
+		minChet = el1;
+	else minEl = el1;
 	for (int i = 0; i < 14; i++)
 		cin >> a[i];
 	cin >> el16;
@@ -229,9 +234,15 @@ void task_10490() {
 		for (int j = 0; j < 13; j++)
 			a[j] = a[j + 1];
 		a[13] = el16;
+		if (el1 % 2 == 0 && el1 < minChet)
+			minChet = el1;
+		if (el1 < minEl)
+			minEl = el1;
 		cin >> el16;
-		if ((el1 % 2 == 0 || el16 % 2 == 0) && el1 * el16 < minPr)
-			minPr = el1 * el16;
+		if (minChet % 2 == 0 && minChet * el16 < minPr) // michch = 2 // el1 = 1 e
+			minPr = minChet * el16;
+		if (el16 % 2 == 0 && minEl * el16 < minPr)
+			minPr = el16 * minEl;
 	}
 	if (minPr == 1000001)
 		minPr = -1;
@@ -332,11 +343,11 @@ void task_16830() {
 		else n1++;
 		cin >> el7;
 		if (el7 % 6 == 0)
-			kol += n1;
+			kol += n1 + n2 + n3;
 		else if (el7 % 3 == 0)
-			kol += n2;
+			kol += n2 + n6;
 		else if (el7 % 2 == 0)
-			kol += n3;
+			kol += n3 + n6;
 		else kol += n6;
 		for (int j = 0; j < 5; j++)
 			a[j] = a[j + 1];
@@ -350,6 +361,8 @@ void task_16830() {
 Рассматриваются все пары элементов последовательности, находящихся на расстоянии не меньше 10
 (разница в индексах элементов должна быть 10 или более).
 Необходимо определить количество пар, произведение чисел в которых кратно 10.
+
+ИСПРАВИТЬ!!!!!
 */
 
 void task_16903() {
