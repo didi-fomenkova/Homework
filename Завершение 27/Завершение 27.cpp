@@ -58,8 +58,11 @@ void task_5291() {
 			if (numPred < minEl)
 				minEl = numPred;
 		}
-		else if (h > minEl)
+		else if (h > minEl) {
+			minEl = 10001;
+			h = 0;
 			kolH++;
+		}
 		else {
 			h = 0;
 			minEl = 10001;
@@ -194,19 +197,18 @@ void task_11363() {
 void task_23925() {
 	int size, number;
 	int el[2] = { 0 };
-	int max[2] = { 0 };
+	int max[2] = { 0 }; // 17 17*17 34 68
 	cin >> size;
 	for (int i = 0; i < size; i++) {
 		cin >> number;
 		if (number % 17 == 0 && number % 2 == 0 && number >= el[0])
 			el[0] = number;
-		else max[0] = number;
-		if (number % 17 == 0 && number % 2 != 0 && number >= el[1])
-			el[0] = number;
-		else max[1] = number;
-		if (number % 17 != 0 && number % 2 == 0 && number > max[0])
+		else if (number % 2 == 0 && number > max[0]) 
 			max[0] = number;
-		else if (number % 17 != 0 && number % 2 != 0 && number > max[1])
+
+		if (number % 17 == 0 && number % 2 != 0 && number >= el[1])
+			el[1] = number;
+		else if (number % 2 == 1 && number > max[1]) 
 			max[1] = number;
 	}
 	if (el[0] + max[0] > el[1] + max[1])
